@@ -1,7 +1,10 @@
 # llm-deployment
 镜像打包与部署，支持ollama，vllm，lms等方式，自动部署到suanli.cn
 
-## 打包Ollama镜像
+
+## 镜像打包
+
+### 打包Ollama镜像
 
 - clone项目
 
@@ -75,3 +78,10 @@ docker push harbor.suanleme.cn/xuwenzheng/qwen3:30b-a3b
 
 ## 部署服务
 点击这里 [部署服务](https://console.suanli.cn/serverless/create/idc) ，登录后根据页面提示进行部署。
+
+
+## 路线图
+
+- [x] 支持Ollama
+- [] 支持VLLM
+- [] 支持LMS
