@@ -1,0 +1,5 @@
+FROM ollama/ollama
+ADD ollama_pull.sh .
+RUN chmod +x ollama_pull.sh && ./ollama_pull.sh
+
+

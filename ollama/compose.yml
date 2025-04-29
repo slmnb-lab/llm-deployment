@@ -1,0 +1,18 @@
+services:
+  qwq:
+    image: harbor.suanleme.cn/xuwenzheng/qwen3:30b-a3b
+    build: .
+    labels:
+      - suanleme_0.http.port=11434
+      - suanleme_0.http.prefix=qwen332b
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "11434:11434"
+
