@@ -75,6 +75,9 @@ docker push harbor.suanleme.cn/xuwenzheng/qwen3:30b-a3b
 
 ## 部署服务
 点击这里 [部署服务](https://console.suanli.cn/serverless/create/idc) ，登录后根据页面提示进行部署。
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> refs/remotes/origin/main
