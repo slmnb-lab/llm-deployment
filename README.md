@@ -4,6 +4,11 @@
 
 ## 镜像打包
 
+### 环境准备
+
+- 安装了Docker环境
+- Git工具
+
 ### 打包Ollama镜像
 
 - clone项目
@@ -25,6 +30,8 @@ ollama pull qwen3:30b-a3b  # 替换成你需要的模型
 
  - 修改  `ollama` 目录下的 `compose.yml` 文件中的模型名称。
  > 开始之前需要在suanli.cn中创建一个镜像仓库，镜像仓库名称为 `qwq`，镜像标签为 `30b-a3b`。访问这里 [初始化镜像仓库](https://console.suanli.cn/serverless/image)
+
+> harbor.suanleme.cn/xuwenzheng/qwen3:30b-a3b 是suanli.cn中创建的镜像仓库地址，这个参数在部署服务的时候会用到，记得替换成你的镜像仓库地址。
 
 ```yaml
 
@@ -51,7 +58,8 @@ services:
 - 运行打包脚本
 
 ```bash
-docker compose build
+cd llm-deployment/ollama   # 进入ollama目录
+docker compose build       # 打包镜像
 ```
 
 ## 镜像上传
@@ -78,6 +86,12 @@ docker push harbor.suanleme.cn/xuwenzheng/qwen3:30b-a3b
 
 ## 部署服务
 点击这里 [部署服务](https://console.suanli.cn/serverless/create/idc) ，登录后根据页面提示进行部署。
+
+- 选择合适的GPU
+
+- 设置镜像仓库地址 和 访问域名的前缀
+![deployment](./images/deployment.png)
+
 
 
 ## 路线图
