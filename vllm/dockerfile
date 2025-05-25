@@ -1,0 +1,26 @@
+FROM vllm/vllm-openai:v0.8.5
+
+# 安装必要的依赖
+RUN uv pip install --system vllm[audio]==0.8.5
+
+# 创建模型目录
+RUN mkdir -p /root/models/Qwen/Qwen3-32B
+
+# 复制模型文件到镜像中
+ADD ./models/Qwen/Qwen3-32B /root/models/Qwen/Qwen3-32B
+
+# 设置工作目录
+WORKDIR /models
+
+# 设置环境变量
+ENV MODEL_PATH=/root/models/Qwen/Qwen3-32B
+ENV TENSOR_PARALLEL_SIZE=1
+
+# 暴露默认的 OpenAI API 端口
+EXPOSE 8000
+
+# 启动命令
+CMD ["--model", "/root/models/Qwen/Qwen3-32B", \
+     "--host", "0.0.0.0", \
+     "--tensor-parallel-size", "1", \
+     "--port", "8000"]

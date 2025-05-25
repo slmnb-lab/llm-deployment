@@ -1,0 +1,19 @@
+services:
+  ollama-webui-qwen3-30b:
+    image: harbor.suanleme.cn/{yourusername}/ollama-webui-qwen3:30b-a3b
+    build: .
+    labels:
+      - suanleme_0.http.port=8080
+      - suanleme_0.http.prefix=ollama-webui
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "8080:8080"
+      - "11434:11434"
+

@@ -1,0 +1,18 @@
+FROM ghcr.io/open-webui/open-webui:v0.6.9
+
+RUN apt-get update -y  \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y zlib1g-dev wget curl pciutils libssl-dev libffi-dev sqlite3 libsqlite3-dev libbz2-dev liblzma-dev xz-utils 
+
+ENV OLLAMA_BASE_URL=http://localhost:11434
+
+ENV OLLAMA_HOST=0.0.0.0:11434
+RUN curl -fsSL https://ollama.com/install.sh | sh
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
+ENV NVIDIA_VISIBLE_DEVICES=all
+EXPOSE 11434
+EXPOSE 8080
+
+COPY start.sh /app/backend/start.sh
+RUN chmod +x /app/backend/start.sh
+
+CMD ["/app/backend/start.sh"]

@@ -1,0 +1,18 @@
+services:
+  Qwen3-vllm:
+    image: harbor.suanleme.cn/{yourusername}/qwen3-vllm:32b
+    build: .
+    labels:
+      - suanleme_0.http.port=8000
+      - suanleme_0.http.prefix=qwen3-vllm
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "8000:8000"
+
