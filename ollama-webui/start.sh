@@ -3,6 +3,15 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPT_DIR" || exit
 
+# 配置GPU
+if [[ "${USE_CUDA_DOCKER,,}" == "true" ]]; then
+    echo "CUDA is enabled, configuring GPU environment"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib/python3.11/site-packages/torch/lib:/usr/local/lib/python3.11/site-packages/nvidia/cudnn/lib"
+    # 获取所有可用的GPU
+    export CUDA_VISIBLE_DEVICES=$(nvidia-smi --query-gpu=index --format=csv,noheader | tr '\n' ',' | sed 's/,$//')
+    echo "Using GPUs: $CUDA_VISIBLE_DEVICES"
+fi
+
 # 启动ollama服务
 ollama serve &
 
@@ -18,9 +27,9 @@ sleep 15
 # 设置默认模型
 DEFAULT_MODEL=${DEFAULT_MODEL:-qwen3:30b-a3b}
 
-if ! [ -e "$DEFAULT_MODEL" ]; then
+if ! ollama list | grep -q "$DEFAULT_MODEL"; then
     echo "Pulling default model: $DEFAULT_MODEL"
-    ollama pull $DEFAULT_MODEL &
+    ollama pull $DEFAULT_MODEL
 fi
 
 # Add conditional Playwright browser installation

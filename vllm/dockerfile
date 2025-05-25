@@ -22,5 +22,5 @@ EXPOSE 8000
 # 启动命令
 CMD ["--model", "/root/models/Qwen/Qwen3-32B", \
      "--host", "0.0.0.0", \
-     "--tensor-parallel-size", "1", \
+     "--tensor-parallel-size", "$TENSOR_PARALLEL_SIZE", \
      "--port", "8000"]
