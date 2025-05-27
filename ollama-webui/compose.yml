@@ -1,10 +1,7 @@
 services:
-  ollama-webui-qwen3-30b:
-    image: harbor.suanleme.cn/{yourusername}/ollama-webui-qwen3:30b-a3b
+  ollama-webui-qwen3:
+    image: harbor.suanleme.cn/docsify/ollama-webui-qwen3:v20250527
     build: .
-    labels:
-      - suanleme_0.http.port=8080
-      - suanleme_0.http.prefix=ollama-webui
     restart: unless-stopped
     deploy:
       resources:
@@ -16,4 +13,3 @@ services:
     ports:
       - "8080:8080"
       - "11434:11434"
-

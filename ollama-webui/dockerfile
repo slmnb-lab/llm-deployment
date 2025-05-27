@@ -1,28 +1,22 @@
-FROM ghcr.io/open-webui/open-webui:v0.6.9
+# 使用官方镜像作为基础镜像
+FROM ghcr.io/open-webui/open-webui:ollama
 
+# 设置工作目录
+WORKDIR /app/backend
+
+# 复制检查脚本
+COPY pullmodel.sh /app/backend/
+RUN chmod +x /app/backend/pullmodel.sh
+
+# 创建数据持久化的卷
+# VOLUME ["/root/.ollama", "/app/backend/data"]
+
+# 暴露端口
+EXPOSE 8080
+
+# 设置默认模型环境变量
+ENV OLLAMA_HOST=0.0.0.0:11434
 ENV USE_OLLAMA=true
 ENV USE_CUDA=true
-# ENV USE_CUDA_DOCKER=true
-
-ENV OLLAMA_BASE_URL=http://localhost:11434
-ENV OLLAMA_HOST=0.0.0.0:11434
-
-
-RUN apt-get update && \
-    # Install pandoc and netcat
-    apt-get install -y --no-install-recommends git build-essential pandoc netcat-openbsd curl && \
-    apt-get install -y --no-install-recommends gcc python3-dev && \
-    # for RAG OCR
-    apt-get install -y --no-install-recommends ffmpeg libsm6 libxext6 && \
-    # install helper tools
-    apt-get install -y --no-install-recommends curl jq && \
-    # install ollama
-    curl -fsSL https://ollama.com/install.sh | sh && \
-    # cleanup
-    rm -rf /var/lib/apt/lists/*; 
-
-
-COPY start.sh /app/backend/start.sh
-RUN chmod +x /app/backend/start.sh
-
-CMD ["/app/backend/start.sh"]
+# 设置容器启动命令
+CMD ["/app/backend/pullmodel.sh"]
