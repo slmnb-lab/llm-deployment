@@ -1,6 +1,6 @@
 services:
   ollama-webui-qwen3:
-    image: harbor.suanleme.cn/docsify/ollama-webui-qwen3:v20250527
+    image: harbor.suanleme.cn/docsify/ollama-webui-qwen3:v20250528
     build: .
     restart: unless-stopped
     deploy:
@@ -13,3 +13,4 @@ services:
     ports:
       - "8080:8080"
       - "11434:11434"
+
