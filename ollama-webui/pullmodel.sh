@@ -5,7 +5,7 @@ cd "$SCRIPT_DIR" || exit
 
 echo 'begin to start ollama...'; 
 # 启动ollama服务
-ollama serve &
+# ollama serve &
 
 # 等待ollama服务启动
 until curl -s http://localhost:11434 > /dev/null; do 
@@ -15,14 +15,6 @@ done
 
 # 等待ollama服务启动完成
 sleep 15
-
-# 设置默认模型
-DEFAULT_MODEL=${DEFAULT_MODEL:-qwen3:30b-a3b}
-
-if ! ollama list | grep -q "$DEFAULT_MODEL"; then
-    echo "Pulling default model: $DEFAULT_MODEL"
-    ollama pull $DEFAULT_MODEL
-fi
 
 echo 'begin to start open webui...'; 
 
