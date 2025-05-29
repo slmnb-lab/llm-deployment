@@ -16,6 +16,13 @@ done
 # 等待ollama服务启动完成
 sleep 15
 
+DEFAULT_MODEL=${DEFAULT_MODEL:-qwen3:30b-a3b}
+
+if ! ollama list | grep -q "$DEFAULT_MODEL"; then
+    echo "Pulling default model: $DEFAULT_MODEL"
+    ollama pull $DEFAULT_MODEL
+fi
+
 echo 'begin to start open webui...'; 
 
 # 启动Web UI
