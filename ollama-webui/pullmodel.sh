@@ -5,7 +5,7 @@ cd "$SCRIPT_DIR" || exit
 
 echo 'begin to start ollama...'; 
 # 启动ollama服务
-# ollama serve &
+ollama serve &
 
 # 等待ollama服务启动
 until curl -s http://localhost:11434 > /dev/null; do 
